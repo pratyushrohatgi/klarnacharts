@@ -1,0 +1,99 @@
+<body style="height: auto; overflow: hidden; padding: 20px;" ready="">
+  <meta name="auto_height" content="true">
+  <meta name="auto_width" content="true">
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {
+      packages: ['corechart']
+    });
+    google.charts.setOnLoadCallback(drawExample2);
+
+    function drawExample2() {
+      // Some raw data (not necessarily accurate)
+      var rowData1 = [
+        ['Type', 'Cost to customer', 'Cost to merchant'
+        ],
+        ['Credit card', 165, -438]
+      ];
+      var rowData2 = [
+        ['Type', 'Cost to customer', 'Cost to merchant'
+        ],
+        ['Debit card', 122, -63]
+      ];
+      var rowData3 = [
+        ['Type', 'Cost to customer', 'Cost to merchant'
+        ],
+        ['Klarna', 62, -238]
+      ];
+      // Create and populate the data tables.
+      var data = [];
+      data[0] = google.visualization.arrayToDataTable(rowData1);
+      data[1] = google.visualization.arrayToDataTable(rowData2);
+      data[2] = google.visualization.arrayToDataTable(rowData3);
+      
+      var options = {
+        width: 300,
+        height: 240,
+        legend: { position: "none" },
+        vAxis: {
+          title: "$",
+          minValue: -500,
+          maxValue: 500
+        },
+        
+        seriesType: "bars",
+        series: {
+          5: {
+            type: "line"
+          }
+        },
+        isStacked: true,
+        animation: {
+          duration: 1000,
+          easing: 'out'
+        }
+      };
+      var current = 0;
+      // Create and draw the visualization.
+      var chart = new google.visualization.ComboChart(document.getElementById('example2-visualization'));
+      var buttoncc = document.getElementById('example2-b1');
+      var buttondd = document.getElementById('example2-b2');
+      var buttonkk = document.getElementById('example2-b3');
+
+      function drawChart() {
+        // Disabling the button while the chart is drawing.
+       // button.disabled = true;
+        google.visualization.events.addListener(chart, 'ready',
+          function() {
+            //button.disabled = false;
+            //button.value = 'Switch to ' + (current ? 'Tea' : 'Coffee');
+          });
+      //  options['title'] = 'Monthly ' + (current ? 'Coffee' : 'Tea') + ' Production by Country';
+        chart.draw(data[current], options);
+      }
+      drawChart();
+      
+      buttoncc.onclick = function() {
+        current = 0;
+        drawChart();
+      }
+      buttondd.onclick = function() {
+        current = 1;
+        drawChart();
+      }
+
+      buttonkk.onclick = function() {
+        current = 2;
+        drawChart();
+      }
+
+    }
+  </script>
+  <div id="example2-visualization"></div>
+  <button id="example2-b1" value="Switch to Tea">Credit Cards</button>
+  <button id="example2-b2" value="Switch to Tea">Debit Cards</button>
+  <button id="example2-b3" value="Switch to Tea">Klarna</button>
+  
+
+</body>
